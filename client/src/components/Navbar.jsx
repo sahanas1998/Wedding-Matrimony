@@ -33,14 +33,14 @@ function Navbar() {
           </div>
         </div>
       </Link>
-      <div className="bg-[#036200] flex items-center justify-center p-2">
+      {/* <div className="bg-[#036200] flex items-center justify-center p-2">
         <Link
           to="https://wa.me/41788240315"
           className="text-[24px] text-white"
         >
           சுவிஸ் - 0041788240315
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 }
