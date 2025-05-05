@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { HomeImg } from "../constants/Data";
 
 function Landing() {
   const [ageFrom, setAgeFrom] = useState("");
@@ -7,7 +8,7 @@ function Landing() {
   const ageOptions = Array.from({ length: 53 }, (_, i) => i + 18); // 18 to 70
   return (
     <>
-      <div className="relative w-screen h-[613px]">
+      <div className="relative w-screen h-[650px]">
         {/* Background Image */}
         <div
           className="absolute inset-0 bg-cover bg-center"
@@ -98,7 +99,7 @@ function Landing() {
               <select className="border border-gray-300 p-2 rounded">
                 <option></option>
                 <option>அனைத்தும்</option>
-                <option>சூரியன் + செவ்வாய்</option>
+                <option>சூ + செவ்வாய்</option>
                 <option>செவ்வாய் குற்றம்</option>
                 <option>செவ்வாய் குற்றம் அற்றது</option>
               </select>
@@ -113,6 +114,9 @@ function Landing() {
             </div>
           </form>
         </div>
+      </div>
+      <div className="flex items-center justify-center bg-black">
+        <img src={HomeImg} alt="" className="h-[300px] w-fit" />
       </div>
     </>
   );

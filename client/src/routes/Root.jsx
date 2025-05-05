@@ -11,6 +11,7 @@ import Landing from "../pages/Landing";
 import AboutUs from "../pages/AboutUs"
 import Contactus from "../pages/ContactUs"
 import Members from "../pages/Members"
+import Admin from "../pages/Admin";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -19,6 +20,7 @@ const router = createBrowserRouter(
       <Route path="/aboutus" element={<AboutUs />} />
       <Route path="/contactus" element={<Contactus />} />
       <Route path="/members" element={<Members />} />
+      <Route path="/admin" element={<Admin/>} />
     </Route>
   )
 );

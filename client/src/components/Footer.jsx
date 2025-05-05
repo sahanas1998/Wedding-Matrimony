@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <div className=" bg-[#000035] text-white">
+    <div className=" bg-[#000035] text-white border-t border-black">
       <div className="container mx-auto">
         <div className="flex justify-between p-4">
           <Link to="/">@அகில உலக ஐயர் வீட்டு கல்யாண இலவச திருமண சேவை</Link>
