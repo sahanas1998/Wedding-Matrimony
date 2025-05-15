@@ -4,19 +4,15 @@ function AddChart() {
   const [formData, setFormData] = useState({
     id: "",
     sex: "",
-    age: "",
     religion: "",
-    caste:"",
+    caste: "",
     chartData: "",
     image: null,
   });
 
+  const [errors, setErrors] = useState({});
   const fileInputRef = useRef(null);
 
-  // For error handling if needed
-  const [errors, setErrors] = useState({});
-
-  // Handle input and select changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -25,7 +21,6 @@ function AddChart() {
     }));
   };
 
-  // Handle image upload
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -36,23 +31,36 @@ function AddChart() {
     }
   };
 
-  // Trigger hidden file input
   const triggerFileInput = () => {
     fileInputRef.current.click();
   };
 
-  // Handle form submission
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.id.trim()) newErrors.id = "ID is required";
+    if (!formData.sex) newErrors.sex = "Sex is required";
+    if (!formData.religion) newErrors.religion = "Religion is required";
+    if (!formData.caste) newErrors.caste = "Caste is required";
+    if (!formData.chartData) newErrors.chartData = "Chart Data is required";
+    if (!formData.image) newErrors.image = "Image is required";
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (validateForm()) {
+      console.log("Form Submitted with Data:");
+      console.log({
+        ...formData,
+        image: formData.image ? formData.image.name : null,
+      });
 
-    // Log form data to console
-    console.log("Form Submitted with Data:");
-    console.log({
-      ...formData,
-      image: formData.image ? formData.image.name : null, // Display only name in console
-    });
-
-    // Optional: Add validation logic if required
+      setFormData({ id: "", sex: "", religion: "", caste: "", chartData: "", image: null });
+    }
   };
 
   return (
@@ -115,7 +123,7 @@ function AddChart() {
             )}
           </div>
 
-          {/* Chart Data */}
+          {/* Caste */}
           <div className="flex flex-col md:gap-[10px] gap-[8px]">
             <label className="md:text-[20px] text-[14px] font-semibold">
               Caste
@@ -138,6 +146,7 @@ function AddChart() {
             )}
           </div>
 
+          {/* Chart Data */}
           <div className="flex flex-col md:gap-[10px] gap-[8px]">
             <label className="md:text-[20px] text-[14px] font-semibold">
               Chart Data
@@ -178,6 +187,9 @@ function AddChart() {
               <p className="text-green-600 text-sm">
                 Image selected: {formData.image.name}
               </p>
+            )}
+            {errors.image && (
+              <p className="text-red-600 text-sm">{errors.image}</p>
             )}
           </div>
 

@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { HomeImg } from "../constants/Data";
 import AddChart from "../components/AddChart"; // Make sure the path is correct
+import AddImage from "../components/AddImage";
 
 function Admin() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(true);
   const [showAddChartModal, setShowAddChartModal] = useState(false);
+  const [showAddImage, setShowAddImage] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -72,7 +74,10 @@ function Admin() {
                 >
                   Add Chart
                 </button>
-                <button className="bg-[#AA0000] text-white py-[12px] font-bold">
+                <button
+                  className="bg-[#AA0000] text-white py-[12px] font-bold"
+                  onClick={() => setShowAddImage(true)}
+                >
                   Add Successful Image
                 </button>
               </div>
@@ -81,8 +86,8 @@ function Admin() {
 
           {/* AddChart Modal */}
           {showAddChartModal && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-              <div className="bg-white p-6 rounded-lg max-w-2xl w-full overflow-y-auto max-h-[90vh]">
+            <div className="absolute top-0 left-0 w-full bg-black bg-opacity-50 z-50">
+              <div className="bg-white p-6 rounded-lg max-w-2xl w-full mx-auto mt-10 mb-10">
                 <button
                   onClick={() => setShowAddChartModal(false)}
                   className="text-black font-bold text-right text-[24px] w-full mb-4"
@@ -90,6 +95,21 @@ function Admin() {
                   ✕
                 </button>
                 <AddChart />
+              </div>
+            </div>
+          )}
+
+          {/* AddImage Modal */}
+          {showAddImage && (
+            <div className="absolute top-0 left-0 w-full bg-black bg-opacity-50 z-50">
+              <div className="bg-white p-6 rounded-lg max-w-2xl w-full mx-auto mt-10 mb-10">
+                <button
+                  onClick={() => setShowAddImage(false)}
+                  className="text-black font-bold text-right text-[24px] w-full mb-4"
+                >
+                  ✕
+                </button>
+                <AddImage />
               </div>
             </div>
           )}
