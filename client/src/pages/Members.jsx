@@ -23,7 +23,7 @@ function Members() {
         <div className="flex flex-col gap-[24px]">
           <div className="flex items-end justify-end">
             {" "}
-            <select className="border border-gray-300 p-2 rounded">
+            <select className="border bg-black text-white border-gray-300 p-2 rounded">
               <option>All</option>
               <option>சூ + செவ்வாய்</option>
               <option>செவ்வாய் குற்றம்</option>
