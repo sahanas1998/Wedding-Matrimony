@@ -19,30 +19,28 @@ function Landing() {
         ></div>
 
         {/* Black Overlay */}
-        <div className="absolute inset-0 bg-black opacity-70"></div>
+        <div className="absolute inset-0 bg-black opacity-80"></div>
 
         {/* Form (make it visible and above overlay) */}
-        <div className="relative z-10 flex justify-center items-center h-full">
-          <form className="bg-white p-12 rounded shadow-md text-[24px] flex justify-center gap-[24px] items-center">
+        <div className="relative z-10 flex justify-center items-center h-full container mx-auto">
+          <form className="border border-white p-12  rounded shadow-md lg:text-[24px] text-[20px] flex md:flex-row flex-col justify-center gap-[24px] items-center">
             <div className="flex flex-col gap-[18px]">
-              <label className="block mb-2 font-semibold text-gray-700">
+              <label className="block mb-2 font-semibold text-white">
                 Groom / Bride
               </label>
-              <select className="border border-gray-300 p-2 rounded">
+              <select className="border border-gray-300 p-2 rounded text-black">
                 <option></option>
                 <option>ஆண்</option>
                 <option>பெண்</option>
               </select>
             </div>
             <div className="flex flex-col gap-[18px]">
-              <label className="block mb-2 font-semibold text-gray-700">
-                Age
-              </label>
+              <label className="block mb-2 font-semibold text-white">Age</label>
               <div className="flex gap-4">
                 <select
                   value={ageFrom}
                   onChange={(e) => setAgeFrom(e.target.value)}
-                  className="border border-gray-300 p-2 rounded"
+                  className="border border-gray-300 p-2 rounded text-black"
                 >
                   <option value="" disabled>
                     From
@@ -70,7 +68,7 @@ function Landing() {
               </div>
             </div>
             <div className="flex flex-col gap-[18px]">
-              <label className="block mb-2 font-semibold text-gray-700">
+              <label className="block mb-2 font-semibold text-white">
                 Religion
               </label>
               <select className="border border-gray-300 p-2 rounded">
@@ -80,7 +78,7 @@ function Landing() {
               </select>
             </div>
             <div className="flex flex-col gap-[18px]">
-              <label className="block mb-2 font-semibold text-gray-700">
+              <label className="block mb-2 font-semibold text-white">
                 Caste
               </label>
               <select className="border border-gray-300 p-2 rounded">
@@ -93,7 +91,7 @@ function Landing() {
               </select>
             </div>
             <div className="flex flex-col gap-[18px]">
-              <label className="block mb-2 font-semibold text-gray-700">
+              <label className="block mb-2 font-semibold text-white">
                 Chart
               </label>
               <select className="border border-gray-300 p-2 rounded">
@@ -105,11 +103,9 @@ function Landing() {
               </select>
             </div>
             <div className="flex flex-col gap-[18px]">
-              <label className="block mb-2 font-semibold text-gray-700">
-                Search{" "}
-              </label>
-              <button className="bg-black text-white py-2 px-8 rounded">
-                Submit
+              <label className="block mb-2  ">Search </label>
+              <button className="bg-[#036200] font-bold text-white py-2 px-8 rounded">
+                Search
               </button>
             </div>
           </form>

@@ -8,7 +8,7 @@ function RootLayout() {
   return (
     <div>
       <Navbar>
-        <Navbar/>
+        <Navbar />
       </Navbar>
       <header>
         <Header />
