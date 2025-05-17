@@ -94,7 +94,7 @@ function Admin() {
                 >
                   ✕
                 </button>
-                <AddChart />
+                <AddChart onClose={() => setShowAddChartModal(false)} />
               </div>
             </div>
           )}

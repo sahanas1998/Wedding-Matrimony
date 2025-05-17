@@ -1,7 +1,7 @@
 const Chart = require("../models/ChartModel");
 
 exports.createChart = async (data, imageFile) => {
-  const chart = new chart({
+  const chart = new Chart({
     ...data,
     image: imageFile,
   });
@@ -12,7 +12,6 @@ exports.getAllCharts = async () => {
   const charts = await Chart.find();
   return charts.map((chart) => ({
     ...chart.toObject(),
-    mood: getMood(chart.createdAt),
   }));
 };
 
