@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
+import { createChart } from "../services/api";
 
-function AddChart() {
+function AddChart({onClose}) {
   const [formData, setFormData] = useState({
     id: "",
     sex: "",
@@ -12,28 +13,6 @@ function AddChart() {
 
   const [errors, setErrors] = useState({});
   const fileInputRef = useRef(null);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setFormData((prev) => ({
-        ...prev,
-        image: file,
-      }));
-    }
-  };
-
-  const triggerFileInput = () => {
-    fileInputRef.current.click();
-  };
 
   const validateForm = () => {
     const newErrors = {};
@@ -49,18 +28,52 @@ function AddChart() {
 
     return Object.keys(newErrors).length === 0;
   };
+  
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      console.log("Form Submitted with Data:");
-      console.log({
-        ...formData,
-        image: formData.image ? formData.image.name : null,
-      });
-
-      setFormData({ id: "", sex: "", religion: "", caste: "", chartData: "", image: null });
+    const errs = validateForm();
+    if (Object.keys(errs).length > 0) {
+      setErrors(errs);
+      return;
     }
+
+    try {
+      // Prepare data for backend
+      const chartData = new FormData();
+      chartData.append("id", formData.id);
+      chartData.append("sex", formData.sex);
+      chartData.append("religion", formData.religion);
+      chartData.append("caste", formData.caste);
+      chartData.append("chartData", formData.chartData);
+      if (formData.image) {
+        chartData.append("image", formData.image);
+      }
+
+      const response = await createChart(chartData);
+      console.log("Chart created successfully:", response.data);
+      onClose(); // Close form on success
+    } catch (error) {
+      console.error("Error creating chart:", error);
+      alert("Something went wrong while submitting the form.");
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+    setErrors({ ...errors, [name]: "" });
+  };
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFormData({ ...formData, image: file });
+    }
+  };
+
+  const triggerFileInput = () => {
+    fileInputRef.current.click();
   };
 
   return (

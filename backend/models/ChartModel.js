@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
 const chartSchema = new mongoose.Schema({
-  id: String,
+  id: Number,
   sex: String,
-  religion: Number,
+  religion: String,
   caste: String,
   image: String,
   chartData: String,

@@ -1,21 +1,27 @@
-import React from "react";
+import React,{useState , useEffect} from "react";
 import MemberCard from "../components/MemberCard";
-import { Boy, Girl } from "../constants/Data";
-import { Chart1 } from "../constants/Data";
+import { getCharts } from "../services/api";
 
 function Members() {
-  const membersData = [
-    { img: Girl, id: "1045", bgColor: "#F2C7EB", chartImg: Chart1 },
-    { img: Boy, id: "1045", bgColor: "#B8DBFF", chartImg: Chart1 },
-    { img: Girl, id: "1045", bgColor: "#F2C7EB", chartImg: Chart1 },
-    { img: Boy, id: "1045", bgColor: "#B8DBFF", chartImg: Chart1 },
-    { img: Boy, id: "1045", bgColor: "#B8DBFF", chartImg: Chart1 },
-    { img: Girl, id: "1045", bgColor: "#F2C7EB", chartImg: Chart1 },
-    { img: Boy, id: "1045", bgColor: "#B8DBFF", chartImg: Chart1 },
-    { img: Girl, id: "1045", bgColor: "#F2C7EB", chartImg: Chart1 },
-    { img: Boy, id: "1045", bgColor: "#B8DBFF", chartImg: Chart1 },
-    { img: Boy, id: "1045", bgColor: "#B8DBFF", chartImg: Chart1 },
-  ];
+  const [charts, setCharts] = useState([]);
+  const [selectChart, setSelectChart] = useState("");
+
+  useEffect(() => {
+    const fetchCharts = async () => {
+      try {
+        const response = await getCharts();
+        setCharts(response.data);
+      } catch (error) {
+        console.error("Error fetching pets:", error);
+      }
+    };
+
+    fetchCharts();
+  }, []);
+
+  const filterData = selectChart
+    ? charts.filter((chart) => chart.chartData === selectChart)
+    : charts;
 
   return (
     <div className="py-[80px] lg:px-[24px] px-[16px] bg-black">
@@ -23,21 +29,27 @@ function Members() {
         <div className="flex flex-col gap-[24px]">
           <div className="flex items-end justify-end">
             {" "}
-            <select className="border bg-black text-white border-gray-300 p-2 rounded">
-              <option>All</option>
-              <option>சூ + செவ்வாய்</option>
-              <option>செவ்வாய் குற்றம்</option>
-              <option>செவ்வாய் குற்றம் அற்றது</option>
+            <select
+              className="border bg-black text-white md:w-fit w-full border-gray-300 p-2 rounded"
+              value={selectChart}
+              onChange={(e) => setSelectChart(e.target.value)}
+            >
+              <option value="">All</option>
+              <option value="சூ + செ">சூ + செ</option>
+              <option value="செவ்வாய் குற்றம்">செவ்வாய் குற்றம்</option>
+              <option value="செவ்வாய் குற்றம் அற்றது">
+                செவ்வாய் குற்றம் அற்றது
+              </option>
             </select>
           </div>
           <div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-1 gap-[24px] justify-between">
-            {membersData.map((member, index) => (
+            {filterData.map((member, index) => (
               <MemberCard
                 key={index}
                 img={member.img}
                 id={member.id}
-                bgColor={member.bgColor}
-                chartImg={member.chartImg}
+                sex={member.sex}
+                chartImg={`http://localhost:5000/uploads/${member.image}`}
               />
             ))}
           </div>
