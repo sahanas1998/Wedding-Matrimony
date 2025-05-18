@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaFacebook } from "react-icons/fa";
 import { BsWhatsapp } from "react-icons/bs";
-import { FiPhoneCall } from "react-icons/fi";
+import { MdMarkEmailUnread } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 function ContactUs() {
   const [formData, setFormData] = useState({
@@ -13,6 +14,8 @@ function ContactUs() {
   });
 
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,13 +36,15 @@ function ContactUs() {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const newErrors = {};
 
-    if (!formData.firstName.trim()) newErrors.firstName = "First name is required.";
-    if (!formData.lastName.trim()) newErrors.lastName = "Last name is required.";
+    if (!formData.firstName.trim())
+      newErrors.firstName = "First name is required.";
+    if (!formData.lastName.trim())
+      newErrors.lastName = "Last name is required.";
     if (!formData.email.trim()) {
       newErrors.email = "Email is required.";
     } else if (!validateEmail(formData.email)) {
@@ -51,37 +56,64 @@ function ContactUs() {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      // Log form data
-      console.log("Form Data Submitted:", formData);
+      try {
+        setLoading(true);
+        const response = await fetch("http://localhost:8000/send-email", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
 
-      // Clear form
-      setFormData({
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        message: "",
-      });
+        if (response.status === 200) {
+          setFormData({
+            firstName: "",
+            lastName: "",
+            email: "",
+            phone: "",
+            message: "",
+          });
+          setSubmitted(true);
+        } else {
+          const result = await response.json();
+          console.error("Error submitting form1:", result.message);
+        }
+      } catch (error) {
+        console.error("Error submitting form:", error.message);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
+  useEffect(() => {
+    if (submitted) {
+      const timer = setTimeout(() => {
+        setSubmitted(false);
+      }, 2000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [submitted]);
+
   return (
-    <div className="py-[64px] lg:px-[24px] px-[16px] bg-black">
+    <div className="md:py-[64px] py-[32px] lg:px-[24px] px-[16px] bg-black">
       <div className="container mx-auto  ">
         <div className="flex flex-col gap-[48px]">
-          <div className="flex justify-between w-full text-white bg-[#000035]">
-            <div className="w-1/2 rounded flex items-center justify-center">
+          <div className="flex lg:flex-row flex-col justify-between lg:w-full text-white bg-[#000035]">
+            <div className="lg:w-1/2 rounded flex items-center justify-center">
               <img
                 src="https://pradakshinaa.wordpress.com/wp-content/uploads/2021/03/sj-21.jpg?w=899"
                 alt=""
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="border border-black rounded w-1/2 p-12">
+            <div className="border border-black rounded lg:w-1/2 md:p-12 p-4">
               <h1 className="text-2xl font-bold mb-4">Contact Us</h1>
-              <form onSubmit={handleSubmit} className="space-y-12">
-                <div className="flex gap-4">
-                  <div className="w-1/2">
+              <form onSubmit={handleSubmit} className="md:space-y-12 space-y-4">
+                <div className="flex md:flex-row flex-col gap-4">
+                  <div className="md:w-1/2 w-full">
                     <input
                       type="text"
                       name="firstName"
@@ -96,7 +128,7 @@ function ContactUs() {
                       </p>
                     )}
                   </div>
-                  <div className="w-1/2">
+                  <div className="md:w-1/2 w-full">
                     <input
                       type="text"
                       name="lastName"
@@ -113,8 +145,8 @@ function ContactUs() {
                   </div>
                 </div>
 
-                <div className="flex gap-4">
-                  <div className="w-1/2">
+                <div className="flex md:flex-row flex-col gap-4">
+                  <div className="md:w-1/2 w-full">
                     <input
                       type="email"
                       name="email"
@@ -129,7 +161,7 @@ function ContactUs() {
                       </p>
                     )}
                   </div>
-                  <div className="w-1/2">
+                  <div className="md:w-1/2 w-full">
                     <input
                       type="tel"
                       name="phone"
@@ -165,24 +197,33 @@ function ContactUs() {
                   type="submit"
                   className="bg-[#FFDA07] text-black font-bold w-full py-4 text-[18px] rounded"
                 >
-                  Send Message
+                  {!loading && <>{submitted ? "Submitted" : "Send Message"}</>}
+                  {loading && !submitted && (
+                    <span className="ml-2">Sending</span>
+                  )}
                 </button>
               </form>
             </div>
           </div>
-          <div className="flex justify-between items-center text-[#FFDA07]">
-            <div className="flex gap-[8px] items-center text-[20px] underline">
+          <div className="flex md:flex-row flex-col justify-between gap-[12px] md:items-center text-start text-[#FFDA07]">
+            <Link
+              className="flex gap-[8px] items-center md:text-[20px] text-[14px] underline"
+              to="https://wa.me/41788240315"
+            >
+              <FaFacebook />
+              <p>திருமண சேவை</p>
+            </Link>
+            <Link
+              className="flex gap-[8px] items-center md:text-[20px] text-[14px] underline"
+              to="https://wa.me/41788240315"
+            >
               <BsWhatsapp />
               <p>+41788240315</p>
-            </div>
-            <div className="flex gap-[8px] items-center text-[20px] underline">
-              <FaFacebook />
-              <p>அகில உலக ஐயர் வீட்டு கல்யாண இலவச திருமண சேவை</p>
-            </div>
-            <div className="flex gap-[8px] items-center text-[20px] underline">
-              <FiPhoneCall />
-              <p>0041788240315</p>
-            </div>
+            </Link>
+            <Link className="flex gap-[8px] items-center md:text-[20px] text-[14px] underline">
+              <MdMarkEmailUnread />
+              <p>iyarweddingmatrimony@gmail.com</p>
+            </Link>
           </div>
         </div>
       </div>

@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { HomeImg } from "../constants/Data";
 import AddChart from "../components/AddChart"; // Make sure the path is correct
 import AddImage from "../components/AddImage";
+import DeleteImage from "../components/DeleteImage";
 
 function Admin() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(true);
   const [showAddChartModal, setShowAddChartModal] = useState(false);
+  const [showDeleteModel , setShowDeleteModel] = useState(false);
   const [showAddImage, setShowAddImage] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -75,7 +77,13 @@ function Admin() {
                   Add Chart
                 </button>
                 <button
-                  className="bg-[#AA0000] text-white py-[12px] font-bold"
+                  onClick={() => setShowDeleteModel(true)}
+                  className="bg-[#AA0000] text-black py-[12px] font-bold"
+                >
+                  Delete Chart
+                </button>
+                <button
+                  className=" bg-[#036200] text-white py-[12px] font-bold"
                   onClick={() => setShowAddImage(true)}
                 >
                   Add Successful Image
@@ -94,7 +102,7 @@ function Admin() {
                 >
                   ✕
                 </button>
-                <AddChart />
+                <AddChart onClose={() => setShowAddChartModal(false)} />
               </div>
             </div>
           )}
@@ -109,7 +117,22 @@ function Admin() {
                 >
                   ✕
                 </button>
-                <AddImage />
+                <AddImage onClose={() => setShowAddImage(false)} />
+              </div>
+            </div>
+          )}
+
+          {/* Delete Chart Modal */}
+          {showDeleteModel && (
+            <div className="absolute top-0 left-0 w-full bg-black bg-opacity-50 z-50">
+              <div className="bg-white p-6 rounded-lg max-w-2xl w-full mx-auto mt-10 mb-10">
+                <button
+                  onClick={() => setShowDeleteModel(false)}
+                  className="text-black font-bold text-right text-[24px] w-full mb-4"
+                >
+                  ✕
+                </button>
+                <DeleteImage onClose={() => setShowDeleteModel(false)} />
               </div>
             </div>
           )}
