@@ -1,34 +1,23 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
-const cors = require("cors");
+const router = express.Router();
 
-const app = express();
+// const app = express();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
-
-app.post("/send-email", async (req, res) => {
-  const {
-    firstName,
-    lastName,
-    phone,
-    email,
-    message,
-  } = req.body;
+router.post("/", async (req, res) => {
+  const { firstName, lastName, phone, email, message } = req.body;
 
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "iyarweddingmatrimony@gmail.com",
-      pass: "thsd kwej gemv fnbo",
+      user: process.env.GMAIL_USER,
+      pass: process.env.GMAIL_PASS,
     },
   });
 
   const mailOptions = {
-    from: '"Iyar Wedding Matrimony" <iyarweddingmatrimony@gmail.com>',
-    to: "iyarweddingmatrimony@gmail.com",
+    from: '"Iyar Wedding Matrimony" <{process.env.GMAIL_USER}>',
+    to: process.env.GMAIL_USER,
     subject: "New Contact Form Submission",
     html: `
           <div style="font-family: 'Arial', sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); background-color: #fafafa;">
@@ -84,7 +73,4 @@ app.post("/send-email", async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 8000;
-app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
-});
+module.exports = router;
