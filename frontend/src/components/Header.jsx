@@ -32,12 +32,12 @@ function Header() {
               <Link to="/members" className={linkClass("/members")}>
                 Members
               </Link>
-              <Link to="/aboutus" className={linkClass("/aboutus")}>
+              {/* <Link to="/aboutus" className={linkClass("/aboutus")}>
                 About Us
               </Link>
               <Link to="/contactus" className={linkClass("/contactus")}>
                 Contact Us
-              </Link>
+              </Link> */}
             </div>
           </div>
           <div className="md:hidden flex items-center justify-center w-full p-2">
