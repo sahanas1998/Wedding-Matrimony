@@ -17,11 +17,18 @@ exports.getAllCharts = async () => {
 
 exports.getChartById = async (id) => {
   const Chart = await Chart.findById(id);
-  return { ...chart.toObject() };
+  return { ...Chart.toObject() };
 };
 
 exports.updateChart = async (id, data) => {
   return await Chart.findByIdAndUpdate(id, data, { new: true });
 };
 
-exports.deleteChart = async (id) => await Chart.findByIdAndDelete(id);
+exports.deleteChart = async (id) => {
+  try {
+    const deletedChart = await Chart.findOneAndDelete({ id: parseInt(id, 10) });
+    return deletedChart;
+  } catch (error) {
+    throw error; // Pass the error to controller
+  }
+};

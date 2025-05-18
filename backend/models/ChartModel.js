@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
 
 const chartSchema = new mongoose.Schema({
-  id: Number,
+  id: {
+    type: Number, // or String, depending on how you store it
+    required: true,
+    unique: true,
+  },
   sex: String,
   religion: String,
   caste: String,

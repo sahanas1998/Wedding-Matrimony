@@ -1,14 +1,22 @@
-import React from "react";
+import React, {useEffect , useState} from "react";
+import { getImages } from "../services/api";
+import { Link } from "react-router-dom";
 
 function AboutUs() {
-  const successStories = [
-    "https://i.pinimg.com/736x/b8/f8/5e/b8f85ea5900c7bfee92f143bae303202.jpg",
-    "https://i.pinimg.com/736x/b8/f8/5e/b8f85ea5900c7bfee92f143bae303202.jpg",
-    "https://i.pinimg.com/736x/b8/f8/5e/b8f85ea5900c7bfee92f143bae303202.jpg",
-    "https://i.pinimg.com/736x/b8/f8/5e/b8f85ea5900c7bfee92f143bae303202.jpg",
-    "https://i.pinimg.com/736x/b8/f8/5e/b8f85ea5900c7bfee92f143bae303202.jpg",
-    "https://i.pinimg.com/736x/b8/f8/5e/b8f85ea5900c7bfee92f143bae303202.jpg",
-  ];
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+      const fetchImages = async () => {
+        try {
+          const response = await getImages();
+          setImages(response.data);
+        } catch (error) {
+          console.error("Error fetching charts:", error);
+        }
+      };
+  
+      fetchImages();
+    }, []);
 
   return (
     <div className="py-[60px] lg:px-[24px] px-[16px] bg-black text-white">
@@ -35,9 +43,12 @@ function AboutUs() {
                 view profile listings, and connect with marriage proposals with
                 just a few clicks.
               </p>
-              <button className="bg-[#AA0000] py-2 px-4 font-semibold lg:w-fit w-full rounded-lg">
+              <Link
+                className="bg-[#AA0000] py-2 px-4 font-semibold lg:w-fit w-full rounded-lg"
+                to="https://wa.me/41788240315"
+              >
                 Contact Me
-              </button>
+              </Link>
             </div>
           </div>
 
@@ -46,10 +57,10 @@ function AboutUs() {
               Some Successful Marriage Stories
             </h3>
             <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-[20px]">
-              {successStories.map((imgUrl, index) => (
+              {images.map((imgUrl, index) => (
                 <img
                   key={index}
-                  src={imgUrl}
+                  src={`http://localhost:5000/images/${imgUrl.image}`}
                   alt={`Story ${index + 1}`}
                   className="rounded-lg h-[300px] w-full object-cover"
                 />

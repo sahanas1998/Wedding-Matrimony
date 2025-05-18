@@ -18,7 +18,7 @@ return (
           alt="Profile"
           className="rounded-t-xl h-[240px] w-full object-cover"
         />
-        <h1 className="text-[20px] font-bold">பதிவு இல - {id}</h1>
+        <h1 className="text-[20px] text-black font-bold">பதிவு இல - {id}</h1>
         <button
           onClick={() => setIsModalOpen(true)}
           className="bg-[#AA0000] text-white text-[18px] font-semibold py-2 px-4 rounded-xl"

@@ -1,7 +1,7 @@
 import React from 'react'
 import { FaFacebook } from "react-icons/fa";
 import { BsWhatsapp } from "react-icons/bs";
-import { FiPhoneCall } from "react-icons/fi";
+import { MdMarkEmailUnread } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 function Footer() {
@@ -14,13 +14,19 @@ function Footer() {
           </h2>
           <div className="flex gap-[18px] items-center justify-center text-white">
             <Link className="hover:text-[#FFDA07]">
-              <BsWhatsapp className="lg:text-[24px] md:text-[18px] text-[16px]" />
-            </Link>
-            <Link className="hover:text-[#FFDA07]">
               <FaFacebook className="lg:text-[24px] md:text-[18px] text-[16px]" />
             </Link>
-            <Link className="hover:text-[#FFDA07]">
-              <FiPhoneCall className="lg:text-[24px] md:text-[18px] text-[16px]" />
+            <Link
+              to="https://wa.me/41788240315"
+              className="hover:text-[#FFDA07]"
+            >
+              <BsWhatsapp className="lg:text-[24px] md:text-[18px] text-[16px]" />
+            </Link>
+            <Link
+              to="mailto:iyarweddingmatrimony@gmail.com"
+              className="hover:text-[#FFDA07]"
+            >
+              <MdMarkEmailUnread className="lg:text-[24px] md:text-[18px] text-[16px]" />
             </Link>
           </div>
         </div>

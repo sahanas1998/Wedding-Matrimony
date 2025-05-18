@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { FaFacebook } from "react-icons/fa";
 import { BsWhatsapp } from "react-icons/bs";
-import { FiPhoneCall } from "react-icons/fi";
-import { RiCheckboxCircleFill } from "react-icons/ri";
+import { MdMarkEmailUnread } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 function ContactUs() {
   const [formData, setFormData] = useState({
@@ -197,11 +197,7 @@ function ContactUs() {
                   type="submit"
                   className="bg-[#FFDA07] text-black font-bold w-full py-4 text-[18px] rounded"
                 >
-                  {!loading && (
-                    <>
-                      {submitted ? "Submitted" : "Send Message"}
-                    </>
-                  )}
+                  {!loading && <>{submitted ? "Submitted" : "Send Message"}</>}
                   {loading && !submitted && (
                     <span className="ml-2">Sending</span>
                   )}
@@ -210,18 +206,24 @@ function ContactUs() {
             </div>
           </div>
           <div className="flex md:flex-row flex-col justify-between gap-[12px] md:items-center text-start text-[#FFDA07]">
-            <div className="flex gap-[8px] items-center md:text-[20px] text-[14px] underline">
+            <Link
+              className="flex gap-[8px] items-center md:text-[20px] text-[14px] underline"
+              to="https://wa.me/41788240315"
+            >
               <FaFacebook />
               <p>திருமண சேவை</p>
-            </div>
-            <div className="flex gap-[8px] items-center md:text-[20px] text-[14px] underline">
+            </Link>
+            <Link
+              className="flex gap-[8px] items-center md:text-[20px] text-[14px] underline"
+              to="https://wa.me/41788240315"
+            >
               <BsWhatsapp />
               <p>+41788240315</p>
-            </div>
-            <div className="flex gap-[8px] items-center md:text-[20px] text-[14px] underline">
-              <FiPhoneCall />
-              <p>0041788240315</p>
-            </div>
+            </Link>
+            <Link className="flex gap-[8px] items-center md:text-[20px] text-[14px] underline">
+              <MdMarkEmailUnread />
+              <p>iyarweddingmatrimony@gmail.com</p>
+            </Link>
           </div>
         </div>
       </div>

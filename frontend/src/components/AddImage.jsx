@@ -1,20 +1,12 @@
 import React, { useState, useRef } from "react";
-
-function AddImage() {
+import { createImage } from "../services/api";
+function AddImage({ onClose }) {
   const [formData, setFormData] = useState({
     image: null,
   });
 
   const [errors, setErrors] = useState({});
   const fileInputRef = useRef(null);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
@@ -39,18 +31,25 @@ function AddImage() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      console.log("Form Submitted with Data:");
-      console.log({
-        ...formData,
-        image: formData.image ? formData.image.name : null,
-      });
+    const errs = validateForm();
+    if (Object.keys(errs).length > 0) {
+      setErrors(errs);
+      return;
+    }
+    try {
+      const imageData = new FormData();
+      if (formData.image) {
+        imageData.append("image", formData.image);
+      }
 
-      setFormData({
-        image: null,
-      });
+      const response = await createImage(imageData);
+      console.log("Image created successfully:", response.data);
+      onClose(); // Close form on success
+    } catch (error) {
+      console.error("Error creating image:", error);
+      alert("Something went wrong while submitting the form.");
     }
   };
 
