@@ -1,6 +1,7 @@
 import React, {useEffect , useState} from "react";
 import { getImages } from "../services/api";
 import { Link } from "react-router-dom";
+import {CEO} from "../constants/Data"
 
 function AboutUs() {
   const [images, setImages] = useState([]);
@@ -25,23 +26,25 @@ function AboutUs() {
           <div className="flex justify-between items-end gap-[24px] w-full flex-col lg:flex-row">
             <div className="w-full lg:w-1/3">
               <img
-                src="https://image1.masterfile.com/getImage/Njk1LTA1NzY0OTAzZW4uMDAwMDAwMDA=AHamwu/695-05764903en_Masterfile.jpg"
-                alt=""
+                src={CEO}
+                alt="CEO"
                 className="object-cover rounded-lg h-[350px] w-full"
               />
             </div>
             <div className="flex flex-col gap-[8px] items-start w-full lg:w-2/3">
               <h3 className="lg:text-[40px] md:text-[32px] text-[30px] text-[#FFDA07] font-bold">
-                Kirupa Kirushanamoorthy
+                சிவசுப்பிரமணியம் கிருபாகரன்
               </h3>
               <h3 className="lg:text-[30px] md:text-[24px] text-[20px] font-semibold">
                 Switzerland
               </h3>
               <p className="text-[20px]">
-                There is no time limit on when you can access our matrimonial
-                platform. You can access our website 24/7 at your convenience,
-                view profile listings, and connect with marriage proposals with
-                just a few clicks.
+                ஐயர் வீட்டுக் கல்யாணம். சைவ குருக்கள், ஐயர் குடும்பத்தவர்களின்
+                நல்ல பழக்கவழக்கங்கள் கலாச்சாரத்தை பேணும் முகமாக எமது சொந்த
+                உறவுகளை ஒருங்கிணைத்து எங்களுக்குள்ளேயே மணமக்களை கண்டுபிடித்து
+                நல்வாழ்வு வாழ்வதற்காக, "ஐயர் வீட்டு கல்யாணம் " எனும் கல்யாண
+                மணமக்கள் தேடும் மேடை இது. எமது பரம்பரை மீண்டும் அழியாது இருக்க
+                வேண்டும் என்ற நோக்கில் இச்சேவையை இலவசமாக உருவாக்கபட்டது.
               </p>
               <Link
                 className="bg-[#AA0000] py-2 px-4 font-semibold lg:w-fit w-full rounded-lg"
